@@ -116,45 +116,59 @@ with tab1:
 # ----------------------------------------------------
 with tab2:
     st.header("🐄 Cattle Register")
-    st.write("Track birth dates, ages, purpose, and target sale dates. You can add new cattle using the '+' button below.")
+    st.write("Track birth dates, ages, purpose, and target sale dates. Add new cattle using the '+' button.")
 
     cattle_data = [
         {"Tag ID": "C-01", "Sex": "Female", "Birth Year/Date": "2021", "Est. Age": "5 Yrs", "Breed": "Bonsmara Cross", "Purpose": "Breeding Cow", "Target Sale": "Keep", "Health Notes": "Healthy - Calved twice"},
         {"Tag ID": "C-02", "Sex": "Male", "Birth Year/Date": "2025-11", "Est. Age": "9 Mos", "Breed": "Nguni Cross", "Purpose": "Bull Calf", "Target Sale": "Nov 2027 (Age 2)", "Health Notes": "Good growth"},
     ]
-    # Expanded to 20 slots to easily fit your new cattle
     for i in range(3, 21):
         cattle_data.append({"Tag ID": f"C-{i:02d}", "Sex": "", "Birth Year/Date": "", "Est. Age": "", "Breed": "", "Purpose": "", "Target Sale": "", "Health Notes": ""})
 
     df_cattle = pd.DataFrame(cattle_data)
-    # num_rows="dynamic" lets you add brand new rows on the fly!
-    st.data_editor(df_cattle, num_rows="dynamic", use_container_width=True)
+    edited_cattle = st.data_editor(df_cattle, num_rows="dynamic", use_container_width=True, key="cattle_editor")
+
+    # Download Button for Cattle Backup
+    csv_cattle = edited_cattle.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Cattle Register Backup (CSV)",
+        data=csv_cattle,
+        file_name="cattle_register_backup.csv",
+        mime="text/csv",
+    )
 
 # ----------------------------------------------------
 # TAB 3: GOAT REGISTER
 # ----------------------------------------------------
 with tab3:
     st.header("🐐 Goat Register")
-    st.write("Track birth dates, wethers for market sale, and stud bucks. You can add new goats using the '+' button below.")
+    st.write("Track birth dates, wethers for market sale, and stud bucks. Add new goats using the '+' button.")
 
     goat_data = [
         {"Tag ID": "G-01", "Sex": "Male (Stud)", "Birth Year/Date": "2023-05", "Est. Age": "3 Yrs", "Breed": "Boerbok", "Purpose": "Breeding Buck", "Target Sale": "Keep", "Health Notes": "Main stud buck"},
         {"Tag ID": "G-02", "Sex": "Male (Castrated)", "Birth Year/Date": "2025-09", "Est. Age": "11 Mos", "Breed": "Boerbok Cross", "Purpose": "Wether", "Target Sale": "Dec 2026 (Festive)", "Health Notes": "Fattening for market"},
     ]
-    # Expanded slots to 15 for your growing herd
     for i in range(3, 16):
         goat_data.append({"Tag ID": f"G-{i:02d}", "Sex": "", "Birth Year/Date": "", "Est. Age": "", "Breed": "", "Purpose": "", "Target Sale": "", "Health Notes": ""})
 
     df_goats = pd.DataFrame(goat_data)
-    # num_rows="dynamic" lets you add brand new goat rows on the fly
-    st.data_editor(df_goats, num_rows="dynamic", use_container_width=True)
+    edited_goats = st.data_editor(df_goats, num_rows="dynamic", use_container_width=True, key="goat_editor")
+
+    # Download Button for Goat Backup
+    csv_goats = edited_goats.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Goat Register Backup (CSV)",
+        data=csv_goats,
+        file_name="goat_register_backup.csv",
+        mime="text/csv",
+    )
 
 # ----------------------------------------------------
 # TAB 4: VACCINE & HEALTH LOG
 # ----------------------------------------------------
 with tab4:
     st.header("💉 Vaccine & Health Treatment Log")
-    st.write("Record treatments given to animals (e.g. Endo+lint, Mexitet, Ivormax, Multimin).")
+    st.write("Record treatments given to animals (e.g., Endo+lint, Mexitet, Ivormax, Multimin). Add new treatments using the '+' button.")
 
     health_log = [
         {"Date": "2026-03-15", "Animal / Group": "All Goats (G-01 to G-11)", "Treatment": "Deworming", "Product Used": "Endo+lint / Valbazen", "Dose": "5 ml Oral", "Next Due Date": "2026-06-15"},
@@ -162,7 +176,16 @@ with tab4:
         {"Date": "2026-08-01", "Animal / Group": "All Cattle (C-01 to C-15)", "Treatment": "Tick Dip", "Product Used": "Triatix Spray", "Dose": "Spray Dip", "Next Due Date": "2026-08-15"}
     ]
     df_health = pd.DataFrame(health_log)
-    st.data_editor(df_health, num_rows="dynamic", use_container_width=True)
+    edited_health = st.data_editor(df_health, num_rows="dynamic", use_container_width=True, key="health_editor")
+
+    # Download Button for Vaccine Log Backup
+    csv_health = edited_health.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Vaccine Log Backup (CSV)",
+        data=csv_health,
+        file_name="vaccine_health_log_backup.csv",
+        mime="text/csv",
+    )
 
 # ----------------------------------------------------
 # TAB 5: SEASONAL HEALTH GUIDE
